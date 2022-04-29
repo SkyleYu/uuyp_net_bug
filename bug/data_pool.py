@@ -1,4 +1,7 @@
 # -- coding: utf-8 --
+from bug.sort_select import SortWay
+
+
 class DataPool(object):
     __cache = {}
 
@@ -8,15 +11,24 @@ class DataPool(object):
 
     @staticmethod
     def print_cahce():
+        """
+        直接打印cache池中的参数
+        :return:
+        """
         print(DataPool.__cache)
 
     @staticmethod
-    def sort_self():
+    def sort_self(sort_way: SortWay = None):
+        """
+        对本池进行排序
+        :return:
+        """
         # DataPool.print_cahce()
         all_item = sorted(DataPool.__cache, key=lambda a:DataPool.__cache[a]["short_get"], reverse=True)
+        pass_list = []
         for item in all_item:
-            if "StatTrak" in item:
-                continue
-            if DataPool.__cache[item]["lease_count"] < 10:
-                continue
-            print(item, DataPool.__cache[item])
+            pass_list.append((item, DataPool.__cache[item]))
+        if sort_way:
+            return sort_way.get_pass(pass_list)
+        else:
+            return pass_list
