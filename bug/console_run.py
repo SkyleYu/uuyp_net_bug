@@ -66,4 +66,4 @@ with open("./info.txt", "w", encoding="utf-8") as file:
         item = str(item).replace('price', "售卖价格").replace('short_unit', "短租价格").replace('long_unit', "长租价格").replace('short_get', "短租年收益").replace('long_get', "长租年收益").replace('lease_count', "出租上架数量")
         print(item)
         file.write(str(item)+"\n")
-        file.close()
+    file.close()

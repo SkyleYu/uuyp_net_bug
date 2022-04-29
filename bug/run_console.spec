@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(
-    ['run.py'],
+    ['run_console.py'],
     pathex=[],
     binaries=[],
     datas=[],
@@ -28,7 +28,7 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name='run',
+    name='run_console',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
