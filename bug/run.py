@@ -8,7 +8,7 @@ data_pool = DataPool()
 
 page = 1
 while True:
-    json = fetch_main(page)
+    json = fetch_main(page, select_type=0)
     if json["Code"] != 0 or json['Data'] is None:
         break
     page += 1

@@ -6,13 +6,39 @@ from bug.sort_select import SortWay
 
 data_pool = DataPool()
 
-page = 1
-while True:
-    json = fetch_main(page)
-    if json["Code"] != 0 or json['Data'] is None:
-        break
-    page += 1
-    analysis(json)
+print("请输入你需要查找的种类：")
+print("8：不限")
+print("0: 只有刀")
+print("1: 只有手枪")
+print("2: 只有步枪（包括狙击枪）")
+print("3: 只有冲锋枪")
+print("4: 只有散弹枪")
+print("5: 只有机枪")
+print("6: 只有手套")
+print("7: 只有任何类型的枪")
+print("可以设置多个选择条件，如输入06，则代表可以同时指定枪与刀")
+res0 = input()
+if "7" in res0:
+    res0 = res0.replace("7", "12345")
+if "8" in res0:
+    res0 = None
+if res0:
+    for key in res0:
+        page = 1
+        while True:
+            json = fetch_main(page, select_type=int(key))
+            if json["Code"] != 0 or json['Data'] is None:
+                break
+            page += 1
+            analysis(json)
+else:
+    page = 1
+    while True:
+        json = fetch_main(page, select_type=None)
+        if json["Code"] != 0 or json['Data'] is None:
+            break
+        page += 1
+        analysis(json)
 
 print("请输入你需要筛选的条件，输入null表示你不需要这个筛选条件")
 sort_select = SortWay()
@@ -33,6 +59,11 @@ print("请输入你期望这件饰品不超过多少售卖价格呢")
 res3 = input()
 if res3 != "null":
     sort_select.max_price = float(res3)
+
+print("请输入你期望这件饰品最低需要多少售卖价格呢")
+res8 = input()
+if res8 != "null":
+    sort_select.min_price = float(res8)
 
 print("请输入你期望这件饰品的品质")
 print("1：崭新出厂")
@@ -63,7 +94,8 @@ if res7 != "null":
 # 写文件
 with open("./info.txt", "w", encoding="utf-8") as file:
     for item in data_pool.sort_self(sort_select):
-        item = str(item).replace('price', "售卖价格").replace('short_unit', "短租价格").replace('long_unit', "长租价格").replace('short_get', "短租年收益").replace('long_get', "长租年收益").replace('lease_count', "出租上架数量")
+        item = str(item).replace('price', "售卖价格").replace('short_unit', "短租价格").replace('long_unit', "长租价格").replace(
+            'short_get', "短租年收益").replace('long_get', "长租年收益").replace('lease_count', "出租上架数量")
         print(item)
-        file.write(str(item)+"\n")
+        file.write(str(item) + "\n")
     file.close()

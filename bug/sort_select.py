@@ -10,6 +10,8 @@ class SortWay(object):
         self.kind = None
         # 最大价格的筛选（大于此值会被跳过）
         self.max_price = None
+        # 最小价格的筛选（小于此值会被跳过）
+        self.min_price = None
         # 期许的短租收益的筛选（小于此值会被跳过）
         self.year_least = None
         # 期许的长租收益的筛选（大于此值会被跳过）
@@ -70,6 +72,9 @@ class SortWay(object):
                     continue
             if self.max_price is not None:
                 if float(item[1]["price"]) >= self.max_price:
+                    continue
+            if self.min_price is not None:
+                if float(item[1]["price"]) < self.min_price:
                     continue
             if self.year_least is not None:
                 if float(item[1]["short_get"]) < self.year_least:
