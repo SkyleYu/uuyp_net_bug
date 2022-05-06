@@ -89,10 +89,10 @@ res5 = input()
 if res5 != "null":
     sort_select.kind = str(res5)
 
-# print("请输入你期望这件饰品名字中不包含")
-# unkind_res = input()
-# if unkind_res != "null":
-#     sort_select.unkind = str(unkind_res)
+print("请输入你期望这件饰品名字中不包含")
+unkind_res = input()
+if unkind_res != "null":
+    sort_select.unkind = str(unkind_res)
 
 print("请输入你期望这件饰品最小的年短租收益率")
 res6 = input()
