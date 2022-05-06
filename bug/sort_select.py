@@ -3,11 +3,15 @@ class SortWay(object):
     def __init__(self):
         # 是否为计数器的筛选
         self.is_StatTrak = None
+        # 是否是纪念品的筛选
+        self.is_Guardar = None
         # 品质的筛选
         self.abrasion = None
         # 以下的属性因为没有什么特殊的直接在外部访问就好
         # 饰品名称的筛选
         self.kind = None
+        # 饰品名称不包括的筛选
+        self.unkind = None
         # 最大价格的筛选（大于此值会被跳过）
         self.max_price = None
         # 最小价格的筛选（小于此值会被跳过）
@@ -26,6 +30,14 @@ class SortWay(object):
         :return:
         """
         self.is_StatTrak = value
+
+    def set_is_Guardar(self, value: bool):
+        """
+        设置是否是纪念品
+        :param value:
+        :return:
+        """
+        self.is_Guardar = value
 
     def set_abrasion_kind(self, ab_index: int):
         """
@@ -64,11 +76,21 @@ class SortWay(object):
                 else:
                     if "StatTrak" in item[0]:
                         continue
+            if self.is_Guardar is not None:
+                if self.is_Guardar:
+                    if "（纪念品）" not in item[0]:
+                        continue
+                else:
+                    if "（纪念品）" in item[0]:
+                        continue
             if self.abrasion is not None:
                 if self.abrasion not in item[0]:
                     continue
             if self.kind is not None:
                 if self.kind not in item[0]:
+                    continue
+            if self.unkind is not None:
+                if self.unkind in item[0]:
                     continue
             if self.max_price is not None:
                 if float(item[1]["price"]) >= self.max_price:

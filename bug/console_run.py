@@ -18,6 +18,8 @@ print("6: 只有手套")
 print("7: 只有任何类型的枪")
 print("可以设置多个选择条件，如输入06，则代表可以同时指定枪与刀")
 res0 = input()
+
+print("正在获取网络数据中，请稍后...")
 if "7" in res0:
     res0 = res0.replace("7", "12345")
 if "8" in res0:
@@ -48,12 +50,19 @@ res1 = input()
 if res1 != "null":
     sort_select.lease_count = int(res1)
 
-print("请输入你期望这件饰品是StatTrak的吗 y/n")
+print("请输入你期望这件饰品是StatTrak的吗 y/n/null（null代表两者都可）")
 res2 = input()
 if res2 == "y" or res2 == "Y":
     sort_select.set_is_StatTrak(True)
 elif res2 == "n" or res2 == "N":
     sort_select.set_is_StatTrak(False)
+
+print("请输入你期望这件饰品是纪念品的吗 y/n/null（null代表两者都可）")
+G_res = input()
+if G_res == "y" or G_res == "Y":
+    sort_select.set_is_Guardar(True)
+elif G_res == "n" or G_res == "N":
+    sort_select.set_is_Guardar(False)
 
 print("请输入你期望这件饰品不超过多少售卖价格呢")
 res3 = input()
@@ -79,6 +88,11 @@ print("请输入你期望这件饰品名字中包含")
 res5 = input()
 if res5 != "null":
     sort_select.kind = str(res5)
+
+# print("请输入你期望这件饰品名字中不包含")
+# unkind_res = input()
+# if unkind_res != "null":
+#     sort_select.unkind = str(unkind_res)
 
 print("请输入你期望这件饰品最小的年短租收益率")
 res6 = input()
