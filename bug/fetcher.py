@@ -59,7 +59,7 @@ def fetch_main(page, select_type=None):
     elif select_type == 6:
         data["category"] = "Type_Hands"
     elif select_type is None:
-        pass
+        data["pageSize"] = 400  # 尽量不要使用这个接口，有数据缺失的漏洞
     else:
         raise RuntimeError("input error:the args of fetcher: select_type")
     # todo:以上的参数欢迎大家在查看浏览器的开发者网络抓包之后总结补全

@@ -23,7 +23,7 @@ print("正在获取网络数据中，请稍后...")
 if "7" in res0:
     res0 = res0.replace("7", "12345")
 if "8" in res0:
-    res0 = None
+    res0 = res0.replace("8", "0123456")
 if res0:
     for key in res0:
         page = 1
