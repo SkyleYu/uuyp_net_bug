@@ -20,7 +20,7 @@ class DataPool(object):
     @staticmethod
     def sort_self(sort_way: SortWay = None):
         """
-        对本池进行排序
+        对本池进行排序，注意这里返回的不是一个dict了，而是一个key+value的元组的list
         :return:
         """
         # DataPool.print_cahce()

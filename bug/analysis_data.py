@@ -9,6 +9,7 @@ def analysis(json):
         # 防止价格为0
         if float(data['Price']):
             DataPool.add_data(data["CommodityName"], {
+                "id": data["Id"],
                 "price": data['Price'],
                 "short_unit": float(data['LeaseUnitPrice']),
                 "long_unit": float(data['LongLeaseUnitPrice']),
