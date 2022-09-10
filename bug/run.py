@@ -1,6 +1,7 @@
 # -- coding: utf-8 --
 from bug.analysis_data import analysis
 from bug.data_pool import DataPool
+from bug.detail_fetcher import detail_ret_fetcher, ret_detail_analysis, detail_sale_fetcher, sale_detail_analysis
 from bug.fetcher import fetch_main
 from bug.sort_select import SortWay
 
@@ -33,7 +34,20 @@ sort_select.year_least = 0.35
 # 写文件
 with open("./info.txt", "w", encoding="utf-8") as file:
     for item in data_pool.sort_self(sort_select):
-        print (item)
-        item = str(item).replace('price', "售卖价格").replace('short_unit', "短租价格").replace('long_unit', "长租价格").replace('short_get', "短租年收益").replace('long_get', "长租年收益").replace('lease_count', "出租上架数量")
-        file.write(str(item)+"\n")
+        print(item)
+        item_str = str(item).replace('price', "售卖价格").replace('short_unit', "短租价格").replace('long_unit', "长租价格").replace('short_get', "短租年收益").replace('long_get', "长租年收益").replace('lease_count', "出租上架数量")
+        file.write(str(item_str)+"\n")
+        ret_list = ret_detail_analysis(detail_ret_fetcher(item[1]["id"]))
+        print("近日出租详情")
+        file.write("近日出租详情" + "\n")
+        for each_data in ret_list:
+            print(each_data)
+            file.write(str(each_data) + "\n")
+        sale_list = sale_detail_analysis(detail_sale_fetcher(item[1]["id"]))
+        print("近日售卖详情")
+        file.write("近日售卖详情" + "\n")
+        for each_data in sale_list:
+            print(each_data)
+            file.write(str(each_data) + "\n")
+
     file.close()
