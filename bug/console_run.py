@@ -140,4 +140,4 @@ with open("./info.txt", "w", encoding="utf-8") as file:
         file.write(str(item_str) + "\n")
         detail_api_weak_up(res8, file, item)
     file.close()
-
+input('按任意键退出')
