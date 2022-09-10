@@ -1,4 +1,5 @@
 # -- coding: utf-8 --
+from bug import detail_fetcher
 from bug.analysis_data import analysis
 from bug.data_pool import DataPool
 from bug.fetcher import fetch_main
@@ -105,11 +106,38 @@ res7 = input()
 if res7 != "null":
     sort_select.year_long = float(res7)
 
+print("是否查看过往交易信息？1：仅查看租赁信息 2：仅查看售卖信息 3：查看租赁与售卖信息 null：不查看")
+res8 = input()
+
+
+def detail_api_weak_up(yn_flag, target_file, target_item):
+    if yn_flag != "null":
+        print("正在获取过往交易信息，请稍后...")
+        if yn_flag == "1" or yn_flag == "3":
+            print('租赁信息: \n')
+            target_file.write('租赁信息: \n')
+            ret_json = detail_fetcher.detail_ret_fetcher(target_item[1]['id'])
+            ret_str_list = detail_fetcher.ret_detail_analysis(ret_json)
+            for single_ret_str in ret_str_list:
+                print(single_ret_str + '\n')
+                target_file.write(single_ret_str + '\n')
+        if yn_flag == "2" or yn_flag == "3":
+            print('售卖信息: \n')
+            target_file.write('售卖信息: \n')
+            sale_json = detail_fetcher.detail_sale_fetcher(target_item[1]['id'])
+            sale_str_list = detail_fetcher.sale_detail_analysis(sale_json)
+            for single_sale_str in sale_str_list:
+                print(single_sale_str + '\n')
+                target_file.write(single_sale_str + '\n')
+
+
 # 写文件
 with open("./info.txt", "w", encoding="utf-8") as file:
     for item in data_pool.sort_self(sort_select):
-        item = str(item).replace('price', "售卖价格").replace('short_unit', "短租价格").replace('long_unit', "长租价格").replace(
+        item_str = str(item).replace('price', "售卖价格").replace('short_unit', "短租价格").replace('long_unit', "长租价格").replace(
             'short_get', "短租年收益").replace('long_get', "长租年收益").replace('lease_count', "出租上架数量")
-        print(item)
-        file.write(str(item) + "\n")
+        print(item_str)
+        file.write(str(item_str) + "\n")
+        detail_api_weak_up(res8, file, item)
     file.close()
+
